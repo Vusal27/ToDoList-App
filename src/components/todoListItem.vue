@@ -59,6 +59,9 @@ export default {
     .view {
         visibility: hidden;
         cursor: pointer;
+        background: transparent;
+        border: 1px solid rgba(178, 34, 34, .2);
+        border-radius: 3px;
     }
     .checked .title {
         text-decoration: line-through;
