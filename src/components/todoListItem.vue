@@ -1,25 +1,43 @@
 <template lang="pug">
-    .todo-item
+    .todo-item(:class="{checked: todo.checked}")
         label.label
             .input-block
                 input(
                     type="checkbox"
+                    @change="checkTodoAsCompleted"
+                    :checked="todo.checked"
                 ).input
             .title {{todo.name}}
         .button
+            router-link(
+                tag="button"
+                :to="`/view/${todo.name}`"
+            ).view =>
+        .button
             button(
                 type="button"
-                @click="removeTodo"
+                @click="removeExistedTodo"
             ).remove x
 </template>
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
     props: {
         todo: Object
     },
     methods: {
-        removeTodo() {
-            this.$emit('removeTodo', this.todo.id);
+        ...mapMutations(['removeTodo', 'checkTodo']),
+        removeExistedTodo() {
+            this.removeTodo(this.todo.id)
+        },
+        checkTodoAsCompleted(e) {
+            console.log(e.target.checked);
+            const todoItem = {
+                ...this.todo,
+                checked: e.target.checked
+            }
+            this.checkTodo(todoItem);
         }
     }
 }
@@ -33,7 +51,18 @@ export default {
             .remove {
                 visibility: visible;
             }
+            .view {
+                visibility: visible;
+            }
         }
+    }
+    .view {
+        visibility: hidden;
+        cursor: pointer;
+    }
+    .checked .title {
+        text-decoration: line-through;
+        opacity: .7;
     }
     .label {
         display: flex;

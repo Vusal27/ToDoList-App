@@ -1,41 +1,42 @@
 <template lang="pug">
     div
         div.todo
-            todo-input(
-                @addTodo="addTodo"
-            )
+            todo-input
             todo-list(
                 v-if="todos.length > 0"
-                :todos="todos"
-                @removeTodo="removeTodo"
+                :todos="filteredTodos"
             )
 </template>
 <script>
 import todoInput from './todoInput';
 import todoList from './todoList';
+import { mapState } from 'vuex';
+
 export default {
     data() {
-        return {
-            todos:[]
-        }
+        return {};
     },
     components: {
         todoInput,
         todoList
     },
-    methods: {
-        addTodo(todo) {
-            this.todos.push(todo);
-        },
-        removeTodo(todoId) {
-            this.todos = this.todos.filter(item => {
-                return item.id !== todoId
-            });
-            
+    computed: {
+        ...mapState({
+            todos: state => state.todos.todos,
+            filter: state => state.todos.filter
+        }),
+        filteredTodos() {
+            switch(this.filter) {
+                case 'all' :
+                    return this.todos;
+                case 'active' :
+                    return this.todos.filter(item => item.checked === false);
+                case 'completed' :
+                    return this.todos.filter(item => item.checked);
+            }
         }
     }
-
-}
+};
 </script>
 <style lang="scss" scoped>
     .todo {

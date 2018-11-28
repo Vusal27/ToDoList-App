@@ -5,7 +5,6 @@
                 li.item(v-for="todo in todos")
                     todo-list-item(
                         :todo="todo"
-                        @removeTodo="removeTodo"
                     )
         .footer
             .footer-content
@@ -25,8 +24,11 @@ export default {
         todos: Array
     },
     methods: {
-        removeTodo(todoId) {
-            this.$emit('removeTodo', todoId);
+        checkTodo(todo) {
+            this.$emit('checkTodo', todo);
+        },
+        filterTodos(filter) {
+            this.$emit('filterTodos', filter);
         }
     }
 }
@@ -73,6 +75,8 @@ export default {
     .footer-content {
         display: flex;
         align-items: center;
+        position: relative;
+        z-index: 1;
     }
     .filter {
         flex: 1;

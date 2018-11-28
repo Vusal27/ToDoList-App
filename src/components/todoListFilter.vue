@@ -1,9 +1,33 @@
 <template lang="pug">
     div
-        button(type="button") all
-        button(type="button").active active
-        button(type="button") completed
+        button(
+            v-for="filter in filters"
+            type="button"
+            :class="{active: currentFilter === filter}"
+            @click="filterCurrentTodos(filter)"
+            ) {{filter}}
 </template>
+<script>
+import { mapMutations } from 'vuex';
+
+export default {
+    data() {
+        return {
+            filters: ['all', 'active', 'completed'],
+            currentFilter: 'all'
+        }
+    },
+    methods: {
+        ...mapMutations(['filterTodos']),
+
+        filterCurrentTodos(filter) {
+            this.currentFilter = filter;
+            this.filterTodos(filter);
+        }
+    }
+};
+</script>
+
 <style lang="scss" scoped>
     button {
         margin-right: 20px;
