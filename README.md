@@ -1,17 +1,31 @@
 # todo-app
 
-> A Vue.js project
+> Проект на Vue.js 
 
-## Build Setup
+## Клонирование репозитория
 
 ``` bash
-# install dependencies
+# Создать и перейти в пустую папку через редактор кода
+
+# Клонировать репозиторий
+git clone https://github.com/Vusal27/ToDoList-App.git
+
+# Перейти в папку проекта
+cd ToDoList-App
+
+```
+
+## Настройка сборки
+
+``` bash
+
+# Установить зависимости
 npm install
 
-# serve with hot reload at localhost:8080
+# Команда для работы в localhost:8080
 npm run dev
 
-# build for production with minification
+# Сборка для продакшена + минификация
 npm run build
 ```
 
